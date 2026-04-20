@@ -7,17 +7,20 @@ public class Calc {
 
         for(int i=0; i<expressionBits.length; i++){
             String[] innerBits = expressionBits[i].split(" - ");
+            // 뺄셈식 아닌 경우
             if(innerBits.length == 1) continue;
-            int num1 = Integer.parseInt(innerBits[0]);
-            int num2 = Integer.parseInt(innerBits[1]);
-            expressionBits[i] =  String.valueOf(num1 - num2);
+            // 뺄셈식 계산
+            int innerResult = Integer.parseInt(innerBits[0]);
+            for(int j=1; j<innerBits.length; j++) {
+                innerResult -= Integer.parseInt(innerBits[j]);
+            }
+            expressionBits[i] =  String.valueOf(innerResult);
         }
-
+        //뺄셈 계산 후 덧셈식 계산
         for(String bit : expressionBits){
             int bitToNum = Integer.parseInt(bit);
             result += bitToNum;
         }
         return result;
     }
-
 }
