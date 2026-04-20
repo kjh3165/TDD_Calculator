@@ -2,25 +2,24 @@ package com.ll;
 
 public class Calc {
     public static int run(String expression) {
-        String[] expressionBits = expression.split(" \\+ ");
+        String[] expressionBits = expression.split(" ");
         int result = 0;
+        for(int i=1; i<expressionBits.length; i+=2){
+            result = calc(expressionBits[i], expressionBits[i-1], expressionBits[i+1]);
+            expressionBits[i+1] = String.valueOf(result);
+        }
 
-        for(int i=0; i<expressionBits.length; i++){
-            String[] innerBits = expressionBits[i].split(" - ");
-            // 뺄셈식 아닌 경우
-            if(innerBits.length == 1) continue;
-            // 뺄셈식 계산
-            int innerResult = Integer.parseInt(innerBits[0]);
-            for(int j=1; j<innerBits.length; j++) {
-                innerResult -= Integer.parseInt(innerBits[j]);
-            }
-            expressionBits[i] =  String.valueOf(innerResult);
-        }
-        //뺄셈 계산 후 덧셈식 계산
-        for(String bit : expressionBits){
-            int bitToNum = Integer.parseInt(bit);
-            result += bitToNum;
-        }
         return result;
+    }
+
+    public static int calc(String op, String a, String b){
+        int num1 = Integer.parseInt(a);
+        int num2 = Integer.parseInt(b);
+        return switch (op) {
+            case ("+") -> num1 + num2;
+            case ("-") -> num1 - num2;
+            case ("*") -> num1 * num2;
+            default -> throw new IllegalStateException("Unexpected value: " + op);
+        };
     }
 }
