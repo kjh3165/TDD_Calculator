@@ -5,15 +5,15 @@ import java.util.Arrays;
 
 public class Calc {
     public static int run(String expression) {
+        // 괄호 앞에 붙은 - 를 -1 * ( 로 분리
+        expression = expression.replace("-(", "-1 * (");
         String[] expressionBits = expression.split(" ");
         ArrayList<String> bitsList = new ArrayList<>(Arrays.asList(expressionBits));
-        int result = calc(bitsList);
-
-        return result;
+        return calc(bitsList);
     }
 
     public static int calc(ArrayList<String> bitsList) {
-
+        // bitsList에 값이 하나 남을 때까지 계산 실행
         while(bitsList.size()!=1) {
             boolean hasPar = false;
             boolean hasMul = false;
